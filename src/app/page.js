@@ -12,9 +12,9 @@ export default function Home() {
   const [selectValue, setSelectValue] = useState('');
   const [stockPrice, setStockPrice] = useState('')
 
-  useEffect(()=>{
+  useEffect(() => {
     setInterval(function (e) {
-      
+
       // console.log(e.target.value);
       fetch(`/api/getstockprice?stockName=${stockName}`).then((res) => {
         return res.json()
@@ -22,21 +22,21 @@ export default function Home() {
         console.log(data);
         console.log(data.price);
         setStockPrice(data.price)
-  
+
       }).catch((err) => {
-  
+
       }).finally(() => {
-  
+
       })
     }, 60000);
-  },[stockName])
-  
+  }, [stockName])
+
   // 2.2 function Defination area
   const handleChange = (e) => {
     //object.property.property
     setStockName(e.target.value);
     console.log(e.target.value);
-    
+
     // This is called promiseChain
     fetch(`/api/getstockprice?stockName=${e.target.value}`).then((res) => {
       return res.json()
@@ -50,8 +50,15 @@ export default function Home() {
     }).finally(() => {
 
     })
-    
+
   }  //new way two define a function Es6 (2015)
+
+
+  const labelStyle = {
+    fontSize: '2rem',
+    color: 'black'
+  };
+
 
   //2.3 return statement
   return (
@@ -59,11 +66,12 @@ export default function Home() {
       <Box sx={{ minWidth: '90%', }}>
         <h1>Current price of below stock is {stockPrice} </h1>
         <FormControl fullWidth>
-          <InputLabel id="demo-simple-select-label">Stock Name</InputLabel>
+          <InputLabel style={labelStyle} id="demo-simple-select-label">Stock Name</InputLabel>
           <Select
             labelId="demo-simple-select-label"
             id="demo-simple-select"
             label="Stock Price"
+            style={labelStyle}
             value={selectValue}
             onChange={handleChange}
           >
@@ -73,6 +81,6 @@ export default function Home() {
           </Select>
         </FormControl>
       </Box>
-    </main>
+    </main >
   )
 }
